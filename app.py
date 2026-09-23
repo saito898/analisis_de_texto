@@ -11,17 +11,175 @@ st.set_page_config(
     layout="wide"
 )
 
-# Título y descripción
-st.title("📝 Analizador de Texto con TextBlob")
+# ---------- ESTILOS VISUALES ----------
 st.markdown("""
-Esta aplicación utiliza TextBlob para realizar un análisis básico de texto:
-- Análisis de sentimiento y subjetividad
-- Extracción de palabras clave
-- Análisis de frecuencia de palabras
+<style>
+    /* Fondo general */
+    .stApp {
+        background: linear-gradient(135deg, #f7f9ff 0%, #eef3ff 45%, #f8f5ff 100%);
+        color: #172033;
+    }
+
+    /* Ocultar menú y footer nativo */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+
+    /* Contenedor principal */
+    .block-container {
+        max-width: 1180px;
+        padding-top: 2.2rem;
+        padding-bottom: 3rem;
+    }
+
+    /* Barra lateral */
+    section[data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #102a72 0%, #173f9f 100%);
+    }
+    section[data-testid="stSidebar"] * {
+        color: white !important;
+    }
+    section[data-testid="stSidebar"] .stSelectbox > div > div {
+        background: rgba(255,255,255,.12);
+        border: 1px solid rgba(255,255,255,.22);
+        border-radius: 12px;
+    }
+
+    /* Hero */
+    .hero {
+        background: linear-gradient(135deg, #123b9b 0%, #4b55d9 58%, #7a5ce6 100%);
+        padding: 2.2rem 2.5rem;
+        border-radius: 24px;
+        color: white;
+        box-shadow: 0 18px 45px rgba(48, 70, 160, .22);
+        margin-bottom: 1.8rem;
+    }
+    .hero h1 {
+        color: white;
+        font-size: 2.5rem;
+        margin: 0;
+        letter-spacing: -.04em;
+    }
+    .hero p {
+        color: rgba(255,255,255,.88);
+        font-size: 1.05rem;
+        margin: .65rem 0 0;
+    }
+    .badge {
+        display: inline-block;
+        padding: .35rem .75rem;
+        border-radius: 999px;
+        background: rgba(255,255,255,.15);
+        border: 1px solid rgba(255,255,255,.22);
+        font-size: .82rem;
+        margin-bottom: .8rem;
+    }
+
+    /* Tarjetas */
+    div[data-testid="stVerticalBlockBorderWrapper"] {
+        border-radius: 18px;
+        border: 1px solid #e5e9f4;
+        background: rgba(255,255,255,.82);
+        box-shadow: 0 8px 28px rgba(32, 48, 90, .07);
+    }
+
+    /* Títulos */
+    h2, h3 {
+        color: #172a63;
+        letter-spacing: -.02em;
+    }
+
+    /* Área de texto */
+    textarea {
+        border-radius: 16px !important;
+        border: 1px solid #d9e0f2 !important;
+        background: white !important;
+        box-shadow: inset 0 1px 3px rgba(30,45,90,.04);
+    }
+    textarea:focus {
+        border-color: #4b63db !important;
+        box-shadow: 0 0 0 3px rgba(75,99,219,.12) !important;
+    }
+
+    /* Botones */
+    .stButton > button {
+        width: 100%;
+        border: 0;
+        border-radius: 13px;
+        padding: .72rem 1rem;
+        font-weight: 700;
+        color: white;
+        background: linear-gradient(135deg, #3159d8, #654dd7);
+        box-shadow: 0 8px 18px rgba(69, 82, 190, .22);
+        transition: all .2s ease;
+    }
+    .stButton > button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 24px rgba(69, 82, 190, .28);
+    }
+
+    /* Métricas */
+    div[data-testid="stMetric"] {
+        background: white;
+        padding: 1rem 1.2rem;
+        border-radius: 16px;
+        border: 1px solid #e7eaf3;
+    }
+
+    /* Expander */
+    details {
+        background: rgba(255,255,255,.78);
+        border: 1px solid #e3e7f2 !important;
+        border-radius: 15px !important;
+    }
+
+    /* File uploader */
+    section[data-testid="stFileUploaderDropzone"] {
+        border: 2px dashed #b9c5e8;
+        border-radius: 18px;
+        background: rgba(255,255,255,.7);
+    }
+
+    /* Separadores */
+    hr {
+        border: none;
+        border-top: 1px solid #dde3f1;
+        margin: 1.5rem 0;
+    }
+
+    .section-caption {
+        color: #68738f;
+        font-size: .92rem;
+        margin-top: -.45rem;
+        margin-bottom: 1rem;
+    }
+
+    .footer-custom {
+        text-align: center;
+        color: #7b849b;
+        font-size: .85rem;
+        padding: 1.5rem 0 .5rem;
+    }
+</style>
+""")
+
+st.markdown("""
+<div class="hero">
+    <div class="badge">✦ ANÁLISIS DE LENGUAJE</div>
+    <h1>📝 Analizador de Texto</h1>
+    <p>Descubre el sentimiento, la subjetividad y las palabras que más destacan en tu texto.</p>
+</div>
+""")
+
+
+st.markdown("""
+<div class="section-caption">
+    Analiza textos en español mediante traducción al inglés y procesamiento con TextBlob.
+    Explora sentimiento, subjetividad, frecuencia de palabras y frases detectadas.
+</div>
 """)
 
 # Barra lateral
-st.sidebar.title("Opciones")
+st.sidebar.markdown("## ✦ Opciones")
 modo = st.sidebar.selectbox(
     "Selecciona el modo de entrada:",
     ["Texto directo", "Archivo de texto"]
@@ -144,7 +302,7 @@ def crear_visualizaciones(resultados):
     
     # Visualización de sentimiento y subjetividad con barras de progreso de Streamlit
     with col1:
-        st.subheader("Análisis de Sentimiento y Subjetividad")
+        st.subheader("💭 Sentimiento y subjetividad")
         
         # Normalizar valores para mostrarlos en barras de progreso
         # Sentimiento va de -1 a 1, lo normalizamos a 0-1 para la barra
@@ -171,13 +329,13 @@ def crear_visualizaciones(resultados):
     
     # Palabras más frecuentes usando chart de Streamlit
     with col2:
-        st.subheader("Palabras más frecuentes")
+        st.subheader("🔎 Palabras más frecuentes")
         if resultados["contador_palabras"]:
             palabras_top = dict(list(resultados["contador_palabras"].items())[:10])
             st.bar_chart(palabras_top)
     
     # Mostrar texto traducido
-    st.subheader("Texto Traducido")
+    st.subheader("🌐 Texto traducido")
     with st.expander("Ver traducción completa"):
         col1, col2 = st.columns(2)
         with col1:
@@ -188,7 +346,7 @@ def crear_visualizaciones(resultados):
             st.text(resultados["texto_traducido"])
     
     # Análisis de frases
-    st.subheader("Frases detectadas")
+    st.subheader("💬 Frases detectadas")
     if resultados["frases"]:
         for i, frase_dict in enumerate(resultados["frases"][:10], 1):
             frase_original = frase_dict["original"]
@@ -229,7 +387,8 @@ if modo == "Texto directo":
             st.warning("Por favor, ingresa algún texto para analizar.")
 
 elif modo == "Archivo de texto":
-    st.subheader("Carga un archivo de texto")
+    st.subheader("📂 Carga un archivo")
+    st.markdown('<div class="section-caption">Admite archivos .txt, .csv y .md.</div>', unsafe_allow_html=True)
     archivo = st.file_uploader("", type=["txt", "csv", "md"])
     
     if archivo is not None:
@@ -265,4 +424,4 @@ with st.expander("📚 Información sobre el análisis"):
 
 # Pie de página
 st.markdown("---")
-st.markdown("Desarrollado con ❤️ usando Streamlit y TextBlob")
+st.markdown('<div class="footer-custom">Hecho con ❤️ usando Streamlit, TextBlob y Google Translate</div>', unsafe_allow_html=True)
