@@ -14,161 +14,158 @@ st.set_page_config(
 # ---------- ESTILOS VISUALES ----------
 st.markdown("""
 <style>
-    /* Fondo general */
-    .stApp {
-        background: linear-gradient(135deg, #f7f9ff 0%, #eef3ff 45%, #f8f5ff 100%);
-        color: #172033;
-    }
+/* ===== BASE ===== */
+.stApp {
+    background: #f4f7ff;
+    color: #172033;
+}
 
-    /* Ocultar menú y footer nativo */
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
+.block-container {
+    max-width: 1150px;
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+}
 
-    /* Contenedor principal */
-    .block-container {
-        max-width: 1180px;
-        padding-top: 2.2rem;
-        padding-bottom: 3rem;
-    }
+/* Ocultar elementos nativos */
+#MainMenu { visibility: hidden; }
+footer { visibility: hidden; }
 
-    /* Barra lateral */
-    section[data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #102a72 0%, #173f9f 100%);
-    }
-    section[data-testid="stSidebar"] * {
-        color: white !important;
-    }
-    section[data-testid="stSidebar"] .stSelectbox > div > div {
-        background: rgba(255,255,255,.12);
-        border: 1px solid rgba(255,255,255,.22);
-        border-radius: 12px;
-    }
+/* ===== SIDEBAR ===== */
+section[data-testid="stSidebar"] {
+    background: #102a72;
+}
+section[data-testid="stSidebar"] > div {
+    padding-top: 2rem;
+}
+section[data-testid="stSidebar"] h1,
+section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h3,
+section[data-testid="stSidebar"] label,
+section[data-testid="stSidebar"] p {
+    color: white !important;
+}
 
-    /* Hero */
-    .hero {
-        background: linear-gradient(135deg, #123b9b 0%, #4b55d9 58%, #7a5ce6 100%);
-        padding: 2.2rem 2.5rem;
-        border-radius: 24px;
-        color: white;
-        box-shadow: 0 18px 45px rgba(48, 70, 160, .22);
-        margin-bottom: 1.8rem;
-    }
-    .hero h1 {
-        color: white;
-        font-size: 2.5rem;
-        margin: 0;
-        letter-spacing: -.04em;
-    }
-    .hero p {
-        color: rgba(255,255,255,.88);
-        font-size: 1.05rem;
-        margin: .65rem 0 0;
-    }
-    .badge {
-        display: inline-block;
-        padding: .35rem .75rem;
-        border-radius: 999px;
-        background: rgba(255,255,255,.15);
-        border: 1px solid rgba(255,255,255,.22);
-        font-size: .82rem;
-        margin-bottom: .8rem;
-    }
+/* ===== HEADER ===== */
+.hero-box {
+    background: linear-gradient(120deg, #1645b7, #5661e8);
+    padding: 42px 46px;
+    border-radius: 24px;
+    margin-bottom: 28px;
+    box-shadow: 0 12px 30px rgba(31, 64, 160, 0.18);
+}
+.hero-box .small {
+    color: #dce5ff;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+.hero-box .title {
+    color: white;
+    font-size: 42px;
+    font-weight: 800;
+    margin-top: 8px;
+    line-height: 1.1;
+}
+.hero-box .description {
+    color: #edf1ff;
+    font-size: 17px;
+    margin-top: 12px;
+}
 
-    /* Tarjetas */
-    div[data-testid="stVerticalBlockBorderWrapper"] {
-        border-radius: 18px;
-        border: 1px solid #e5e9f4;
-        background: rgba(255,255,255,.82);
-        box-shadow: 0 8px 28px rgba(32, 48, 90, .07);
-    }
+/* ===== SUBTÍTULOS ===== */
+h2, h3 {
+    color: #193477 !important;
+}
 
-    /* Títulos */
-    h2, h3 {
-        color: #172a63;
-        letter-spacing: -.02em;
-    }
+/* ===== INPUTS ===== */
+textarea {
+    border: 2px solid #dbe3f5 !important;
+    border-radius: 16px !important;
+    background: white !important;
+    color: #172033 !important;
+}
+textarea:focus {
+    border-color: #5369df !important;
+    box-shadow: 0 0 0 3px rgba(83,105,223,.12) !important;
+}
 
-    /* Área de texto */
-    textarea {
-        border-radius: 16px !important;
-        border: 1px solid #d9e0f2 !important;
-        background: white !important;
-        box-shadow: inset 0 1px 3px rgba(30,45,90,.04);
-    }
-    textarea:focus {
-        border-color: #4b63db !important;
-        box-shadow: 0 0 0 3px rgba(75,99,219,.12) !important;
-    }
+/* ===== BOTONES ===== */
+.stButton > button {
+    width: 100%;
+    border: none !important;
+    border-radius: 14px !important;
+    background: linear-gradient(120deg, #315bd7, #6854dc) !important;
+    color: white !important;
+    font-weight: 700 !important;
+    padding: 12px 20px !important;
+    box-shadow: 0 8px 18px rgba(69, 82, 190, .20);
+}
+.stButton > button:hover {
+    background: linear-gradient(120deg, #264dbf, #5845c9) !important;
+    color: white !important;
+}
 
-    /* Botones */
-    .stButton > button {
-        width: 100%;
-        border: 0;
-        border-radius: 13px;
-        padding: .72rem 1rem;
-        font-weight: 700;
-        color: white;
-        background: linear-gradient(135deg, #3159d8, #654dd7);
-        box-shadow: 0 8px 18px rgba(69, 82, 190, .22);
-        transition: all .2s ease;
-    }
-    .stButton > button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 12px 24px rgba(69, 82, 190, .28);
-    }
+/* ===== FILE UPLOADER ===== */
+section[data-testid="stFileUploaderDropzone"] {
+    background: white !important;
+    border: 2px dashed #b8c6ea !important;
+    border-radius: 18px !important;
+}
 
-    /* Métricas */
-    div[data-testid="stMetric"] {
-        background: white;
-        padding: 1rem 1.2rem;
-        border-radius: 16px;
-        border: 1px solid #e7eaf3;
-    }
+/* ===== EXPANDERS ===== */
+div[data-testid="stExpander"] {
+    background: white;
+    border: 1px solid #e0e6f3 !important;
+    border-radius: 16px !important;
+}
 
-    /* Expander */
-    details {
-        background: rgba(255,255,255,.78);
-        border: 1px solid #e3e7f2 !important;
-        border-radius: 15px !important;
-    }
+/* ===== ALERTAS ===== */
+div[data-testid="stAlert"] {
+    border-radius: 14px !important;
+}
 
-    /* File uploader */
-    section[data-testid="stFileUploaderDropzone"] {
-        border: 2px dashed #b9c5e8;
-        border-radius: 18px;
-        background: rgba(255,255,255,.7);
-    }
+/* ===== PROGRESS ===== */
+div[data-testid="stProgress"] > div {
+    border-radius: 99px;
+}
 
-    /* Separadores */
-    hr {
-        border: none;
-        border-top: 1px solid #dde3f1;
-        margin: 1.5rem 0;
-    }
+/* ===== TARJETAS DE RESULTADOS ===== */
+.result-card {
+    background: white;
+    border: 1px solid #e1e6f2;
+    border-radius: 18px;
+    padding: 22px;
+    margin: 8px 0;
+    box-shadow: 0 7px 22px rgba(32,48,90,.06);
+}
 
-    .section-caption {
-        color: #68738f;
-        font-size: .92rem;
-        margin-top: -.45rem;
-        margin-bottom: 1rem;
-    }
+/* ===== TEXTO SECUNDARIO ===== */
+.section-caption {
+    color: #6d7892;
+    font-size: 14px;
+    margin-top: -8px;
+    margin-bottom: 14px;
+}
 
-    .footer-custom {
-        text-align: center;
-        color: #7b849b;
-        font-size: .85rem;
-        padding: 1.5rem 0 .5rem;
-    }
+/* ===== FOOTER ===== */
+.footer-custom {
+    text-align: center;
+    color: #7c879e;
+    font-size: 13px;
+    padding: 20px 0 5px;
+}
 </style>
 """)
 
+
 st.markdown("""
-<div class="hero">
-    <div class="badge">✦ ANÁLISIS DE LENGUAJE</div>
-    <h1>📝 Analizador de Texto</h1>
-    <p>Descubre el sentimiento, la subjetividad y las palabras que más destacan en tu texto.</p>
+<div class="hero-box">
+    <div class="small">✦ ANÁLISIS DE LENGUAJE</div>
+    <div class="title">📝 Analizador de Texto</div>
+    <div class="description">Descubre el sentimiento, la subjetividad y las palabras que más destacan en tu texto.</div>
 </div>
-""")
+""", unsafe_allow_html=True)
 
 
 st.markdown("""
@@ -176,7 +173,7 @@ st.markdown("""
     Analiza textos en español mediante traducción al inglés y procesamiento con TextBlob.
     Explora sentimiento, subjetividad, frecuencia de palabras y frases detectadas.
 </div>
-""")
+""", unsafe_allow_html=True)
 
 # Barra lateral
 st.sidebar.markdown("## ✦ Opciones")
